@@ -5,7 +5,7 @@ This is a [docker](https://www.docker.io) image that eases setup.
 
 ## Usage
 
-This docker image is available as a [trusted build on the docker index](https://index.docker.io/u/clue/json-server/),
+This docker image is available as automated build at (https://index.docker.io/u/docker pull rivancic/docker-json-server-faker/),
 so there's no setup required.
 Using this image for the first time will start a download automatically.
 Further runs will be immediate, as the image will be cached locally.
@@ -13,7 +13,7 @@ Further runs will be immediate, as the image will be cached locally.
 The recommended way to run this container looks like this:
 
 ```bash
-$ docker run -d -p 80:80 -v /home/user/articles.json:/data/db.json clue/json-server
+$ docker run -d -p 80:80 -v /home/user/articles.json:/data/db.json rivancic/docker-json-server-faker
 ```
 
 The above example exposes the JSON Server REST API on port 80, so that you can now browse to:
@@ -34,7 +34,7 @@ This is a rather common setup following docker's conventions:
 You can supply any number of JSON Server arguments that will be passed through unmodified.
 
 ```bash
-$ docker run -it --rm clue/json-server --help
+$ docker run -it --rm rivancic/docker-json-server-faker --help
 ```
 
 ### JSON source
