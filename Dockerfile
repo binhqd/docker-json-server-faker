@@ -1,4 +1,4 @@
-FROM node:latest
+FROM mhart/alpine-node
 MAINTAINER REANTO IVANCIC <renato.ivancic@gmail.com>
 
 # install npm packages
