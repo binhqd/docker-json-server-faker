@@ -1,12 +1,16 @@
-# docker-json-server
+# docker-json-server-faker
 
 [JSON Server](https://github.com/typicode/json-server) provides REST API mocking based on plain JSON.
-This is a [docker](https://www.docker.io) image that eases setup.
+This is a [docker](https://www.docker.io) image with included **[faker](https://www.npmjs.com/package/Faker)** and 
+**[lodash](https://www.npmjs.com/package/lodash)** npm packages that eases programmatically data creation with JS file.
+
+Idea for Dockerfile came from **[clue](https://github.com/clue/docker-json-server)** and  **[stephencoe](https://github.com/stephencoe/docker-json-server)**
+
+Image size is 135.4 MB.
 
 ## Usage
 
-This docker image is available as automated build at (https://index.docker.io/u/docker pull rivancic/docker-json-server-faker/),
-so there's no setup required.
+This docker image is available as automated build at (https://index.docker.io/u/docker pull rivancic/docker-json-server-faker/), so there's no setup required.
 Using this image for the first time will start a download automatically.
 Further runs will be immediate, as the image will be cached locally.
 
@@ -37,26 +41,6 @@ You can supply any number of JSON Server arguments that will be passed through u
 $ docker run -it --rm rivancic/docker-json-server-faker --help
 ```
 
-### JSON source
-
-If you mount a file to `/data/db.json` (as in the above example),
-it will automatically be used as the plain JSON data source file.
-
-A sample file could look like this:
-
-```json
-{
-  "posts": [
-    { "id": 1, "body": "foo" },
-    { "id": 2, "body": "bar" }
-  ],
-  "comments": [
-    { "id": 1, "body": "baz", "postId": 1 },
-    { "id": 2, "body": "qux", "postId": 2 }
-  ]
-}
-```
-
 ### JS seed file
 
 If you mount a file to `/data/file.js`,
@@ -78,3 +62,66 @@ module.exports = function() {
   return data;
 }
 ```
+
+And example of JS seed file that uses faker and lodash modules for generating massive amounts of fake contextual data.
+
+```javascript
+module.exports = function() {
+    var faker = require("faker");
+    var _ = require("lodash");
+    return {
+
+        categories: _.times(6, function(n) {
+            return {
+                image: faker.random.image(),
+                short_description: faker.lorem.sentence(),
+                category_ID: faker.random.uuid()
+            };
+
+        }),
+
+        sub_categories: _.times(100, function(n) {
+            return {
+                image: faker.random.image(),
+                short_description: faker.lorem.sentence(),
+                category_ID: faker.random.uuid()
+            };
+
+        }),
+
+        search: _.times(100, function(n) {
+                return {
+                    image: faker.random.image(),
+                    short_description: faker.lorem.sentence(),
+                    gtin13: faker.random.uuid(),
+                    price: faker.commerce.price()
+
+                };
+
+            })
+            //, ...
+    };
+};
+```
+
+### JSON source
+
+If you mount a file to `/data/db.json` (as in the above example),
+it will automatically be used as the plain JSON data source file.
+
+A sample file could look like this:
+
+```json
+{
+  "posts": [
+    { "id": 1, "body": "foo" },
+    { "id": 2, "body": "bar" }
+  ],
+  "comments": [
+    { "id": 1, "body": "baz", "postId": 1 },
+    { "id": 2, "body": "qux", "postId": 2 }
+  ]
+}
+```
+
+
