@@ -13,6 +13,8 @@ ENV NODE_PATH /usr/lib/node_modules/
 WORKDIR /data
 VOLUME /data
 
+ADD /data/file.js /data/file.js
+
 EXPOSE 80
 ADD run.sh /run.sh
 ENTRYPOINT ["sh", "/run.sh"]
